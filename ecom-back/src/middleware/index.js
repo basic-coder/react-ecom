@@ -1,11 +1,11 @@
-var jwt = require("jsonwebtoken"); 
+var jwt = require("jsonwebtoken")
 const env = require('dotenv');
 const JWT_SECRET = process.env.JWT_SECRET;
 
 //environment variable 
 env.config()
 
-const fetchUser = (req,res,next)=>{
+exports.requestSignin = (req,res,next)=>{
     //get the user from the jwt token and id to request object
 
     const token = req.header('auth-token');
@@ -21,4 +21,17 @@ const fetchUser = (req,res,next)=>{
     }
 } 
 
-module.exports = fetchUser;
+exports.userMiddleware = (req,res,next)=>{
+    if(req.user.role !== 'user'){
+        return res.status(400).json({ message: 'User Access denied'})
+    }
+    next();
+}
+
+exports.adminMiddleware =  (req,res,next)=>{
+    if(req.user.role !== 'admin'){
+        return res.status(400).json({ message: 'Admin Access denied'})
+    }
+    next();
+    
+}

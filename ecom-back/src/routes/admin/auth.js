@@ -4,7 +4,7 @@ const User = require('../../model/User')
 var bcrypt= require("bcryptjs"); 
 const {body, validationResult} = require('express-validator');
 const jwt = require('jsonwebtoken');
-const fetchUser = require('../../middleware/fetchUser')
+//const requestSignin = require('../../middleware')
 const env = require('dotenv');
 const JWT_SECRET = process.env.JWT_SECRET;
 
@@ -82,7 +82,8 @@ router.post('/admin/signin',[
         }
         const data = {
             user:{
-                id: user.id
+                id: user.id,
+                role: user.role
             }
         }
         //signed token
@@ -94,9 +95,9 @@ router.post('/admin/signin',[
     }
 
 })
-
+/*
 //route3 : get login user details: POST "/api/auth/getUser".login required
-router.post('/getUser',fetchUser, async (req,res)=>{
+router.post('/getUser',requestSignin, async (req,res)=>{
 
     try{
     userId = req.user.id;
@@ -107,5 +108,5 @@ router.post('/getUser',fetchUser, async (req,res)=>{
         res.status(500).send("Internal server error")
     } 
 
-})
+})*/
 module.exports = router
