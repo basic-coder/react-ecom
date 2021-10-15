@@ -1,5 +1,9 @@
 const Category = require("../model/Category")
 const slugify = require("slugify")
+const env = require('dotenv');
+
+//environment variable 
+env.config()
 
 function createCategories(categories, parentId = null){
     const categoryList =[]
@@ -25,10 +29,16 @@ function createCategories(categories, parentId = null){
 
 
 exports.addCategory = (req, res) => {
+
+
     const categoryObj = {
       name: req.body.name,
       slug: slugify(req.body.name),
     };
+
+    if(req.file){
+      categoryObj.categoryImage = process.env.API + '/public/'+ req.file.filename ;
+    }
   
     if (req.body.parentId) {
       categoryObj.parentId = req.body.parentId;

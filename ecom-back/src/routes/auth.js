@@ -15,7 +15,7 @@ env.config()
 
 //route1 : Create a User using: POST "/api/signup". No login required
 router.post('/signup',[
-    body('username','Enter a valid name').isLength({min:3}),
+    body('firstName','Enter a valid name').isLength({min:3}),
     body('email','Enter a valid email').isEmail(),
     body('password').isLength({min:5})
 ], async (req,res)=>{
@@ -37,9 +37,9 @@ router.post('/signup',[
 
     //create user
     user = await User.create({
-        username: req.body.username,
-        firstname: req.body.firstname,
-        lastname: req.body.lastname,
+        username: req.body.userName,
+        firstname: req.body.firstName,
+        lastname: req.body.lastName,
         password: secPass,
         email: req.body.email
     });
@@ -50,7 +50,7 @@ router.post('/signup',[
     }
     //signed token
     const authtoken = jwt.sign(data, JWT_SECRET);  
-    res.json(authtoken)
+    res.json({authtoken, message: "User registered"})
     }catch(error){
         console.error(error.message)
         res.status(500).send("Some error occured")
@@ -81,12 +81,15 @@ router.post('/signin',[
         }
         const data = {
             user:{
-                id: user.id
+                id: user.id,
+                role: user.role
             }
         }
         //signed token
         const authtoken = jwt.sign(data, JWT_SECRET);
-        res.json(authtoken)
+        const {firstName, lastName, role} =user;
+        res.status(200).json({authtoken,
+        user})
     }catch(error){
         console.error(error.message)
         res.status(500).send("Internal server error")

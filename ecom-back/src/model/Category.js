@@ -10,9 +10,13 @@ const categorySchema = new mongoose.Schema({
         required: true,
         unique: true
     },
+    categoryImage: {
+        type: String
+    },
     productId: {
         type: String,
       },
+
 },
 {timestamps:  true}
 );
