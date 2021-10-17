@@ -16,18 +16,20 @@ const Signin = (props) => {
 
 
 
-  const userLogin = (e) =>{
+  const userLogin = () =>{
 
     
-    const user ={
+    const user={
     email, password
     }
     dispatch(login(user));
   }
 
+
   if(auth.authenticate){
     return <Redirect to={'/'}/>
   }
+
 
   return (
     <>

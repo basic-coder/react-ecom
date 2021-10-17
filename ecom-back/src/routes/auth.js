@@ -6,6 +6,7 @@ const {body, validationResult} = require('express-validator');
 const jwt = require('jsonwebtoken');
 //const fetchUser = require('../middleware')
 const env = require('dotenv');
+const { requestSignin } = require("../middleware");
 const JWT_SECRET = process.env.JWT_SECRET;
 
 

@@ -6,6 +6,7 @@ const {body, validationResult} = require('express-validator');
 const jwt = require('jsonwebtoken');
 //const requestSignin = require('../../middleware')
 const env = require('dotenv');
+const { requestSignin } = require("../../middleware");
 const JWT_SECRET = process.env.JWT_SECRET;
 
 //environment variable 
@@ -87,8 +88,9 @@ router.post('/admin/signin',[
             }
         }
         //signed token
-        const {firstName, lastName, role} =user;
-        const authtoken = jwt.sign(data, JWT_SECRET);
+        
+        const authtoken = jwt.sign(data, JWT_SECRET, {expiresIn: '1h'});
+        res.cookie('authtoken',authtoken, {expiresIn: '1h'});
         res.status(200).json({authtoken,
         user})
     }catch(error){
@@ -111,4 +113,12 @@ router.post('/getUser',requestSignin, async (req,res)=>{
     } 
 
 })*/
+
+router.post('/admin/signout', requestSignin, async(req,res) =>{
+    res.clearCookie('authtoken');
+    res.status(200).json({
+        message: 'Signout successfully...!'
+    })
+
+} )
 module.exports = router

@@ -1,11 +1,13 @@
 import axios from 'axios'
 import { api } from '../UrlConfig';
 
+const authtoken = window.localStorage.getItem('authtoken')
+
 const axiosInstance = axios.create({
     baseURL: api,
-    //headers:{
-      //  'auth-token':''
-    //}
+    headers:{
+        'authtoken': authtoken ? `${authtoken}` : ``
+    }
 });
 
 

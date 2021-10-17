@@ -8,7 +8,7 @@ env.config()
 exports.requestSignin = (req,res,next)=>{
     //get the user from the jwt token and id to request object
 
-    const token = req.header('auth-token');
+    const token = req.header('authtoken');
     if(!token){
         res.status(401).send({error: "Please authenticate using a valid token"})
     }
