@@ -17,7 +17,7 @@ const storage = multer.diskStorage({
 })
 const upload = multer({ storage })
 
-router.post('/category/create', requestSignin, adminMiddleware, upload.single('categoryImg') ,addCategory)
+router.post('/category/create', requestSignin, adminMiddleware, upload.single('categoryImg'),addCategory)
 router.get('/category/getcategory',getCategories)
 
 module.exports = router

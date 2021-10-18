@@ -89,10 +89,9 @@ router.post('/admin/signin',[
         }
         //signed token
         
-        const authtoken = jwt.sign(data, JWT_SECRET, {expiresIn: '1h'});
-        res.cookie('authtoken',authtoken, {expiresIn: '1h'});
-        res.status(200).json({authtoken,
-        user})
+        const authtoken = jwt.sign(data, JWT_SECRET, {expiresIn: '1d'});
+        res.cookie('authtoken',authtoken, {expiresIn: '1d'});
+        res.status(200).json({authtoken,user})
     }catch(error){
         console.error(error.message)
         res.status(500).send("Internal server error")
@@ -114,7 +113,7 @@ router.post('/getUser',requestSignin, async (req,res)=>{
 
 })*/
 
-router.post('/admin/signout', requestSignin, async(req,res) =>{
+router.post('/admin/signout', async(req,res) =>{
     res.clearCookie('authtoken');
     res.status(200).json({
         message: 'Signout successfully...!'
