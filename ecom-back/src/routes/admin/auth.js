@@ -8,6 +8,7 @@ const jwt = require('jsonwebtoken');
 const env = require('dotenv');
 const { requestSignin } = require("../../middleware");
 const JWT_SECRET = process.env.JWT_SECRET;
+const shortId = require('shortid');
 
 //environment variable 
 env.config()
@@ -40,6 +41,7 @@ router.post('/admin/signup',[
         firstname: req.body.firstName,
         lastname: req.body.lastName,
         password: secPass,
+        username: shortId.generate(),
         email: req.body.email
     });
     const data = {
