@@ -22,14 +22,14 @@ router.post('/admin/signup',[
     // if there are error return bad request and errors
     const errors = validationResult(req);
     if(!errors.isEmpty()){
-        return res.status(400).json({error: errors.array()});
+        return res.status(500).json({error: errors.array()});
     }
     // check whether the user exist already
     try{
 
     let user = await User.findOne({email: req.body.email});
     if(user){
-        return res.status(400).json({error:"Sorry a user with this email already exist"})
+        return res.status(500).json({error:"Sorry a user with this email already exist"})
     }
 
     const salt = await bcrypt.genSalt(10);
@@ -66,7 +66,7 @@ router.post('/admin/signin',[
 ], async (req,res)=>{
     const errors = validationResult(req);
     if(!errors.isEmpty()){
-        return res.status(400).json({error: errors.array()});
+        return res.status(500).json({error: errors.array()});
     }
 
     const {email,password} = req.body;
@@ -76,12 +76,12 @@ router.post('/admin/signin',[
             return res.status(400).json({error: "Please enter with correct credentials"})
         }
         if(user.role != "admin"){
-            return res.status(400).json({error: " not an admin"})
+            return res.status(500).json({error: " not an admin"})
         }
 
         const passwordCompare = await bcrypt.compare(password, user.password);
         if(!passwordCompare){
-            return res.status(400).json({error: "Please enter with correct credentials"})
+            return res.status(500).json({error: "Please enter with correct credentials"})
         }
         const data = {
             user:{

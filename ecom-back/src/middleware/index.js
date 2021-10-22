@@ -10,27 +10,27 @@ exports.requestSignin = (req,res,next)=>{
 
     const token = req.header('authtoken');
     if(!token){
-        res.status(401).send({error: "Please authenticate using a valid token"})
+        res.status(500).send({error: "Please authenticate using a valid token"})
     }
     try{
     const data = jwt.verify(token,JWT_SECRET)
     req.user = data.user;
     next();
     }catch(error){
-        res.status(401).send({error: "Please authenticate using a valid token"})
+        res.status(500).send({error: "Please authenticate using a valid token"})
     }
 } 
 
 exports.userMiddleware = (req,res,next)=>{
     if(req.user.role !== 'user'){
-        return res.status(400).json({ message: 'User Access denied'})
+        return res.status(500).json({ message: 'User Access denied'})
     }
     next();
 }
 
 exports.adminMiddleware =  (req,res,next)=>{
     if(req.user.role !== 'admin'){
-        return res.status(400).json({ message: 'Admin Access denied'})
+        return res.status(500).json({ message: 'Admin Access denied'})
     }
     next();
     

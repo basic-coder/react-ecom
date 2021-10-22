@@ -24,6 +24,7 @@ export const getAllCategory = () =>{
 export const addCategory = (form) =>{
     return async dispatch =>{
         dispatch({ type: categoryConstants.ADD_NEW_CATEGORY_REQUEST});
+        try {
         const res = await axiosInstance.post('category/create',form);
         if(res.status === 201){
         dispatch({
@@ -37,6 +38,9 @@ export const addCategory = (form) =>{
             });
 
         }
+    } catch (error) {
+        console.error(error.response);
+    }
     }
 }
 
