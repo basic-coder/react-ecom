@@ -21,9 +21,11 @@ const categoryRoutes = require('./routes/category');
 const productRoutes = require('./routes/product');
 const cartRoutes = require('./routes/cart');
 const initialDataRoutes = require('./routes/admin/initialData');
+const pageRoutes = require('./routes/admin/page');
 
 //routes
 app.use('/api',authRoutes)
+app.use('/api',pageRoutes)
 app.use('/api',adminRoutes)
 app.use('/api',categoryRoutes)
 app.use('/api',productRoutes)

@@ -11,6 +11,7 @@ import Products from "./containers/Products";
 import Orders from "./containers/Order";
 import Category from "./containers/Category";
 import { getInitialData } from "./action/initialData.action";
+import NewPage from "./containers/NewPage";
 
 function App() {
   const dispatch = useDispatch();
@@ -20,13 +21,16 @@ function App() {
     if (!auth.authenticate) {
       dispatch(isUserLoggedIn());
     }
-    dispatch(getInitialData());
-  });
+    if(auth.authenticate){
+      dispatch(getInitialData());
+    }
+  },[auth.authenticate]);
 
   return (
     <div className="App">
       <Switch>
         <PrivateRoute path="/" exact component={Home} />
+        <PrivateRoute path="/page" exact component={NewPage} />
         <PrivateRoute path="/products"  component={Products} />
         <PrivateRoute path="/orders" component={Orders} />
         <PrivateRoute path="/category" component={Category} />

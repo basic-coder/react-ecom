@@ -2,17 +2,31 @@ import React from 'react'
 import { Form } from 'react-bootstrap'
 
 const Input = (props) =>{
-    return (
-        <>
-            <Form.Group className="mb-3">
-                  {/* <Form.Label>{props.label}</Form.Label> */}
-                  <Form.Control type={props.type} value={props.value} onChange={props.onChange} placeholder={props.placeholder} />
+
+    let input = null;
+    switch(props.type){
+        case 'select':
+            input = <Form.Group className="mb-3">
+                  {props.label && <Form.Label>{props.label}</Form.Label>}
+                  <select className="form-control form-control-sm" value={props.value} onChange={props.onChange}>
+                      <option value="">{props.placeholder}</option>
+                      {
+                          props.options.length > 0? props.options.map((option,index) => <option key={index} value={option.value}>{option.name}</option>):null
+                      }
+                  </select>
+               
+            </Form.Group>
+            break
+        case 'text':
+        default : 
+           input = <Form.Group className="mb-3">
+                  <Form.Control type={props.type} value={props.value} onChange={props.onChange} placeholder={props.placeholder} {...props} />
                 <Form.Text className="text-muted">
                     {props.errorMessage}
                 </Form.Text>
             </Form.Group>
-        </>
-    )
+    }
+    return input
 }
 
 export default Input
