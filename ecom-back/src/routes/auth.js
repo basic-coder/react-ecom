@@ -78,6 +78,13 @@ router.post('/signin',[
             return res.status(500).json({error: "Please enter with correct credentials"})
         }
 
+        if(user.role != "user"){
+            return res.status(500).json({error: " not an user"})
+        }
+
+        
+
+
         const passwordCompare = await bcrypt.compare(password, user.password);
         if(!passwordCompare){
             return res.status(500).json({error: "Please enter with correct credentials"})

@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {NavLink ,Link} from 'react-router-dom'
 import { signout } from "../../action";
 
-export default function Header() {
+const Header = (props) =>{
 
   const auth = useSelector(state => state.auth)
   const dispatch = useDispatch();
@@ -63,3 +63,5 @@ export default function Header() {
     </div>
   );
 }
+
+export default Header;

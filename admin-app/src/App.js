@@ -5,7 +5,7 @@ import Home from "./containers/Home";
 import Signup from "./containers/Signup";
 import Signin from "./containers/Signin";
 import PrivateRoute from "./HOC/PrivateRoute";
-import { getAllCategory, isUserLoggedIn } from "./action";
+import { isUserLoggedIn } from "./action";
 import { useDispatch, useSelector } from "react-redux";
 import Products from "./containers/Products";
 import Orders from "./containers/Order";

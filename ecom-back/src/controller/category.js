@@ -1,10 +1,6 @@
 const Category = require("../model/Category")
 const slugify = require("slugify")
 const shortid = require('shortid')
-const env = require('dotenv');
-
-//environment variable 
-env.config()
 
 function createCategories(categories, parentId = null){
     const categoryList =[]

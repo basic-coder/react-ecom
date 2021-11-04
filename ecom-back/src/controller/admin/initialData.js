@@ -1,21 +1,6 @@
 const Category = require('../../model/Category');
 const Product = require('../../model/Product');
-const slugify = require("slugify")
-const env = require('dotenv');
-
-//environment variable 
-env.config()
-
-exports.initialData = async (req,res) =>{
-
-    const categories = await Category.find({}).exec();
-    const products = await Product.find({})
-    .select('_id name description slug productPictures price quantity category').populate({ path: 'category', select: '_id name'}).exec();
-    res.status(200).json({
-        categories: createCategories(categories),
-        products
-    })
-}
+const Order = require("../../model/order");
 
 function createCategories(categories, parentId = null){
     const categoryList =[]
@@ -39,3 +24,19 @@ function createCategories(categories, parentId = null){
 
     return categoryList
 }
+
+exports.initialData = async (req, res) => {
+    const categories = await Category.find({}).exec();
+    const products = await Product.find({ createdBy: req.user._id })
+      .select("_id name price quantity slug description productPictures category")
+      .populate({ path: "category", select: "_id name" })
+      .exec();
+    const orders = await Order.find({})
+      .populate("items.productId", "name")
+      .exec();
+    res.status(200).json({
+      categories: createCategories(categories),
+      products,
+      orders,
+    });
+  };

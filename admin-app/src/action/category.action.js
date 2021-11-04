@@ -62,7 +62,6 @@ export const updateCategories = (form) =>{
     }
 }
 
-
 export const deleteCategories = (ids) =>{
     return async dispatch =>{
         dispatch({type: categoryConstants.DELETE_CATEGORIES_REQUEST})
